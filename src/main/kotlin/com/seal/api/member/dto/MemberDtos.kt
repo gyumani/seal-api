@@ -3,6 +3,7 @@ package com.seal.api.member.dto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.seal.api.common.annotation.ValidEnum
 import com.seal.api.common.status.Gender
+import com.seal.api.member.entity.Member
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
@@ -65,5 +66,8 @@ data class MemberDtoRequest(
 
     private fun String.toLocalDate(): LocalDate =
         LocalDate.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+    fun toEntity(): Member =
+        Member(id, loginId, password, name, birthDate, gender, email)
 
 }

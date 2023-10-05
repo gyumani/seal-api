@@ -1,5 +1,6 @@
 package com.seal.api.member.controller
 
+import com.seal.api.common.dto.BaseResponse
 import com.seal.api.member.dto.MemberDtoRequest
 import com.seal.api.member.service.MemberSerivce
 import jakarta.validation.Valid
@@ -15,7 +16,8 @@ class MemberController (
 ){
     //회원가입
     @PostMapping("/signup")
-    fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): String {
-        return memberSerivce.signUp(memberDtoRequest)
+    fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): BaseResponse<Unit> {
+        val resultMsg: String = memberSerivce.signUp(memberDtoRequest)
+        return BaseResponse(message = resultMsg)
     }
 }

@@ -1,5 +1,6 @@
 package com.seal.api.member.service
 
+import com.seal.api.common.exception.InvalidInputException
 import com.seal.api.member.dto.MemberDtoRequest
 import com.seal.api.member.entity.Member
 import com.seal.api.member.repository.MemberRepository
@@ -16,19 +17,10 @@ class MemberSerivce (
         // 아이디 중복검사
         var member: Member? = memberRepository.findByLoginId(memberDtoRequest.loginId)
         if(member != null){
-            return "이미 등록된 ID입니다."
+            throw InvalidInputException("loginId", "이미 등록된 ID입니다.")
         }
 
-        member = Member(
-            memberDtoRequest.id,
-            memberDtoRequest.loginId,
-            memberDtoRequest.password,
-            memberDtoRequest.name,
-            memberDtoRequest.birthDate,
-            memberDtoRequest.gender,
-            memberDtoRequest.email
-        )
-
+        member = memberDtoRequest.toEntity()
         memberRepository.save(member)
 
         return "회원가입이 완료되었습니다."
