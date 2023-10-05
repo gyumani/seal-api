@@ -1,7 +1,7 @@
 server:
-  port: 8080
+  port: 8090
   servlet:
-    context-path: /
+    context-path: /seal/api/
     encoding:
       charset: UTF-8
       enabled: true
