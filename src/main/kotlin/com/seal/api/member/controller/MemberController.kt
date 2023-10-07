@@ -1,11 +1,15 @@
 package com.seal.api.member.controller
 
+import com.fasterxml.jackson.databind.ser.Serializers.Base
 import com.seal.api.common.authority.TokenInfo
 import com.seal.api.common.dto.BaseResponse
 import com.seal.api.member.dto.LoginDto
 import com.seal.api.member.dto.MemberDtoRequest
+import com.seal.api.member.dto.MemberDtoResponse
 import com.seal.api.member.service.MemberSerivce
 import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -29,4 +33,13 @@ class MemberController (
     fun login(@RequestBody @Valid loginDto: LoginDto): BaseResponse<TokenInfo> {
         return BaseResponse(data = memberSerivce.login(loginDto))
     }
+
+    /**
+     * 내 정보 보기
+     */
+    @GetMapping("/info/{id}")
+    fun searchMyInfo(@PathVariable id: Long) : BaseResponse<MemberDtoResponse> {
+        return BaseResponse(data = memberSerivce.searchMyInfo(id))
+    }
+
 }

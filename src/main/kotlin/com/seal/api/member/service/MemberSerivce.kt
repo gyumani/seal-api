@@ -6,11 +6,13 @@ import com.seal.api.common.exception.InvalidInputException
 import com.seal.api.common.status.ROLE
 import com.seal.api.member.dto.LoginDto
 import com.seal.api.member.dto.MemberDtoRequest
+import com.seal.api.member.dto.MemberDtoResponse
 import com.seal.api.member.entity.Member
 import com.seal.api.member.entity.MemberRole
 import com.seal.api.member.repository.MemberRepository
 import com.seal.api.member.repository.MemberRoleRepository
 import jakarta.transaction.Transactional
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.stereotype.Service
@@ -52,5 +54,16 @@ class MemberSerivce (
 
         return jwtTokenProvider.createToken(authentication)
     }
+
+    /*
+    *  내 정보 보기
+    * */
+    fun searchMyInfo(id: Long): MemberDtoResponse {
+        val member = memberRepository.findByIdOrNull(id)
+            ?: throw InvalidInputException("id", "회원번호(${id})가 존재하지 않는 유저입니다.")
+
+        return member.toDto()
+    }
+
 
 }

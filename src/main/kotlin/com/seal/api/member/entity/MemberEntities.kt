@@ -2,8 +2,11 @@ package com.seal.api.member.entity
 
 import com.seal.api.common.status.Gender
 import com.seal.api.common.status.ROLE
+import com.seal.api.member.dto.MemberDtoResponse
 import jakarta.persistence.*
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import kotlin.math.log
 
 @Entity
 @Table(
@@ -38,6 +41,19 @@ class Member(
     // 추가
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     val memberRole: List<MemberRole>? = null
+
+    private fun LocalDate.formatDate(): String =
+        this.format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+
+    fun toDto(): MemberDtoResponse =
+        MemberDtoResponse(
+            id!!,
+            loginId,
+            name,
+            birthDate.formatDate(),
+            gender.desc,
+            email
+        )
 }
 @Entity
 class MemberRole(

@@ -25,6 +25,7 @@ class SecurityConfig (
             }
             .authorizeHttpRequests          {
                 it.requestMatchers("/seal/api/member/signup").anonymous()
+                    .requestMatchers("/seal/api/member/info/**").hasRole("MEMBER")
                     .anyRequest().permitAll()
             }
             .addFilterBefore                (
