@@ -1,6 +1,8 @@
 package com.seal.api.member.controller
 
+import com.seal.api.common.authority.TokenInfo
 import com.seal.api.common.dto.BaseResponse
+import com.seal.api.member.dto.LoginDto
 import com.seal.api.member.dto.MemberDtoRequest
 import com.seal.api.member.service.MemberSerivce
 import jakarta.validation.Valid
@@ -17,7 +19,14 @@ class MemberController (
     //회원가입
     @PostMapping("/signup")
     fun signUp(@RequestBody @Valid memberDtoRequest: MemberDtoRequest): BaseResponse<Unit> {
-        val resultMsg: String = memberSerivce.signUp(memberDtoRequest)
-        return BaseResponse(message = resultMsg)
+        return BaseResponse(message = memberSerivce.signUp(memberDtoRequest))
+    }
+
+    /*
+    * 로그인
+    * */
+    @PostMapping("/login")
+    fun login(@RequestBody @Valid loginDto: LoginDto): BaseResponse<TokenInfo> {
+        return BaseResponse(data = memberSerivce.login(loginDto))
     }
 }
