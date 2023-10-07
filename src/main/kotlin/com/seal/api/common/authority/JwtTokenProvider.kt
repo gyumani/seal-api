@@ -58,7 +58,7 @@ class JwtTokenProvider {
 
         // 권한 정보 추출
         val authorities: Collection<GrantedAuthority> = (auth as String)
-            .split("")
+            .split(",")
             .map { SimpleGrantedAuthority(it) }
 
         val principal: UserDetails =

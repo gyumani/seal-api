@@ -65,5 +65,15 @@ class MemberSerivce (
         return member.toDto()
     }
 
+    /**
+     * 내 정보 수정
+     */
+    fun saveMyInfo(memberDtoRequest: MemberDtoRequest): String {
+        val member = memberDtoRequest.toEntity()
+        memberRepository.save(member)
+        return "수정 완료 되었습니다."
+    }
+
+
 
 }
