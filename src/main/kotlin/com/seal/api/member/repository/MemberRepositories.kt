@@ -1,11 +1,8 @@
 package com.seal.api.member.repository
 
-import com.seal.api.member.entity.Member
-import com.seal.api.member.entity.MemberRole
+import com.seal.api.member.entity.MemberEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface MemberRepository: JpaRepository<Member, Long> {
-    fun findByLoginId(loginId: String): Member?
+interface MemberRepository: JpaRepository<MemberEntity, Int> {
+    fun findByLoginId(loginId: String): MemberEntity?
 }
-
-interface MemberRoleRepository: JpaRepository<MemberRole, Long>

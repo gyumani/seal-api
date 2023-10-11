@@ -1,5 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+configurations {
+    developmentOnly
+    runtimeClasspath{
+        extendsFrom
+    }
+}
+
 plugins {
     val kotlinVersion = "1.8.22"
     id("org.springframework.boot") version "3.1.4"
@@ -7,6 +14,7 @@ plugins {
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
+    kotlin("kapt") version "1.6.0"
 }
 
 group = "com.seal"
@@ -33,6 +41,11 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    implementation("org.mapstruct:mapstruct:1.4.1.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.4.1.Final")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 allOpen {

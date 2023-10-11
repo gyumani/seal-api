@@ -1,7 +1,7 @@
 package com.seal.api.common.service
 
 import com.seal.api.common.dto.CustomUser
-import com.seal.api.member.entity.Member
+import com.seal.api.member.entity.MemberEntity
 import com.seal.api.member.repository.MemberRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -21,12 +21,12 @@ class CustomUserDetailService (
             ?.let { createUserDetails(it) }
             ?: throw UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다.")
 
-    private fun createUserDetails(member: Member): UserDetails =
+    private fun createUserDetails(memberEntity: MemberEntity): UserDetails =
         CustomUser(
-            member.id!!,
-            member.loginId,
-            passwordEncoder.encode(member.password),
-            member.memberRole!!.map {SimpleGrantedAuthority("ROLE_${it.role}")}
+            memberEntity.mId!!,
+            memberEntity.loginId!!,
+            passwordEncoder.encode(memberEntity.password!!),
+            memberEntity.roles!!.map {SimpleGrantedAuthority("ROLE_${it.role}")}
         )
 
 }

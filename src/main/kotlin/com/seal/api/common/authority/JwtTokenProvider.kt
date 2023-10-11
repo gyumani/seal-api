@@ -40,7 +40,7 @@ class JwtTokenProvider {
         val accessToken = Jwts.builder()
             .setSubject(authentication.name)
             .claim("auth", authorities)
-            .claim("userId", (authentication.principal as CustomUser).userId)
+            .claim("mId", (authentication.principal as CustomUser).mId)
             .setIssuedAt(now)
             .setExpiration(accessExpiration)
             .signWith(key, SignatureAlgorithm.HS256)
@@ -54,7 +54,7 @@ class JwtTokenProvider {
         val claims: Claims = getClaims(token)
 
         val auth = claims["auth"] ?: throw RuntimeException("잘못된 토큰입니다.")
-        val userId = claims["userId"] ?: throw RuntimeException("잘못된 토큰입니다.")
+        val mId = claims["mId"] ?: throw RuntimeException("잘못된 토큰입니다.")
 
         // 권한 정보 추출
         val authorities: Collection<GrantedAuthority> = (auth as String)
@@ -62,7 +62,7 @@ class JwtTokenProvider {
             .map { SimpleGrantedAuthority(it) }
 
         val principal: UserDetails =
-            CustomUser(userId.toString().toLong(), claims.subject, "", authorities)
+            CustomUser(mId.toString().toInt(), claims.subject, "", authorities)
 
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
