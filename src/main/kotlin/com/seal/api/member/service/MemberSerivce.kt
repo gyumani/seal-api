@@ -28,8 +28,6 @@ class MemberSerivce (
     // 회원가입
     @Transactional
     fun signUp(memberDTO: MemberDTO): String {
-
-        println(memberDTO.loginId)
         // 아이디 중복검사
         var member: MemberEntity? = memberDTO.loginId?.let { memberRepository.findByLoginId(it) }
         if(member != null){

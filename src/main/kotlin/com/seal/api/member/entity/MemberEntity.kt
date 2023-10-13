@@ -22,4 +22,6 @@ data class MemberEntity (@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @OneToMany(mappedBy = "members", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     var roles:MutableList<MemberRoleEntity>? = null
+    @OneToMany(mappedBy = "members", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
+    var profiles:MutableList<MemberProfileEntity>? = null
 }

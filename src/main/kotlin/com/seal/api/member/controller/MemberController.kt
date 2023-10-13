@@ -23,6 +23,10 @@ class MemberController (
     //회원가입
     @PostMapping("/signup")
     fun signUp(@RequestBody @Valid memberDTO: MemberDTO): BaseResponse<Unit> {
+
+        memberDTO.profiles?.forEach {
+            println(it.nickName)
+        }
         return BaseResponse(message = memberSerivce.signUp(memberDTO))
     }
 
