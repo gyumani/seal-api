@@ -5,6 +5,7 @@ import com.seal.api.common.dto.BaseResponse
 import com.seal.api.common.dto.CustomUser
 import com.seal.api.member.dto.LoginDTO
 import com.seal.api.member.dto.MemberDTO
+import com.seal.api.member.dto.MemberProfileDTO
 import com.seal.api.member.service.MemberSerivce
 import jakarta.validation.Valid
 import org.springframework.security.core.context.SecurityContextHolder
@@ -23,10 +24,6 @@ class MemberController (
     //회원가입
     @PostMapping("/signup")
     fun signUp(@RequestBody @Valid memberDTO: MemberDTO): BaseResponse<Unit> {
-
-        memberDTO.profiles?.forEach {
-            println(it.nickName)
-        }
         return BaseResponse(message = memberSerivce.signUp(memberDTO))
     }
 
@@ -66,6 +63,25 @@ class MemberController (
                 ).mId
 
         return BaseResponse(message = memberSerivce.saveMyInfo(memberDTO))
+    }
+
+
+    @PostMapping("/profile/save")
+    fun profileSave(@RequestBody @Valid profileDTO: MemberProfileDTO):BaseResponse<Unit> {
+        return BaseResponse(message = memberSerivce.profileSave(profileDTO, "신규 프로파일이 추가되었습니다."))
+    }
+
+    @PutMapping("/profile/save")
+    fun profileModify(@RequestBody @Valid profileDTO: MemberProfileDTO):BaseResponse<Unit> {
+        return BaseResponse(message = memberSerivce.profileSave(profileDTO, "프로파일이 수정되었습니다."))
+    }
+    @GetMapping("/profile/list")
+    fun profileList() : BaseResponse<MutableList<MemberProfileDTO>> {
+        val mId = (
+                SecurityContextHolder.getContext().authentication.principal as CustomUser
+                ).mId
+
+        return BaseResponse(data = memberSerivce.profileList(mId))
     }
 
 

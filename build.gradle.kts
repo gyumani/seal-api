@@ -1,4 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
+
+val tag:String = SimpleDateFormat("yyyyMMdd_HHmm").format(Date())
 
 configurations {
     developmentOnly
@@ -66,4 +71,13 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.create("sealAutoPush") {
+    doLast {
+        exec {
+            commandLine("./autoPush.sh", tag)
+            println("auto push seal:$tag Finished")
+        }
+    }
 }

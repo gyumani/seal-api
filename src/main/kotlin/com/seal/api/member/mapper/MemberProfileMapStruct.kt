@@ -13,7 +13,7 @@ interface MemberProfileMapStruct: EntityMapper<MemberProfileEntity, MemberProfil
     )
     override fun toEntity(dto: MemberProfileDTO): MemberProfileEntity
 
-    @InheritInverseConfiguration
+    @InheritConfiguration
     override fun toDTO(entity: MemberProfileEntity): MemberProfileDTO
 
     companion object {
