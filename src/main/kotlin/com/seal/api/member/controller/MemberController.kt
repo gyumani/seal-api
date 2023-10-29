@@ -62,6 +62,7 @@ class MemberController (
                     .principal as CustomUser
                 ).mId
 
+        var type = false
         return BaseResponse(message = memberSerivce.saveMyInfo(memberDTO))
     }
 
